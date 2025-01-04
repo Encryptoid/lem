@@ -40,6 +40,7 @@ the absolute value of the current line display.")
 (define-minor-mode line-numbers-mode
     (:name "Line numbers"
      :global t
+     :enable-hook 'enable-hook
      :disable-hook 'disable-hook))
 
 (define-command toggle-line-numbers (&optional relative) (:universal-nil)
@@ -53,6 +54,9 @@ With a positive universal argument, use relative line numbers. Also obey the glo
 
 (defun disable-hook ()
   (setf *relative-line* *previous-relative-line*))
+
+(defun enable-hook ()
+  (setf (lem:variable-value 'lem-core:wrap-line-attribute :global) 'line-numbers-attribute))
 
 (defun compute-line (buffer point)
   (if *relative-line*
