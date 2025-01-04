@@ -74,3 +74,11 @@ With a positive universal argument, use relative line numbers. Also obey the glo
                           `((0 ,(length string) line-numbers-attribute)))))
       (lem/buffer/line:make-content :string string
                                     :attributes attribute))))
+
+(defmethod lem-core:compute-wrap-left-area-content (left-side-width left-side-characters)
+  (if (< 0 left-side-width)
+      (list (lem-core::make-object-with-type
+             (make-string left-side-characters :initial-element #\space)
+             'line-numbers-attribute
+             (lem-core::char-type #\space)))
+      nil))
